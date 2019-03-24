@@ -3,7 +3,7 @@ import {token} from '../api'
 import  {login} from '../helper/auth'
 import Cookie from 'js-cookie'
 import Link from 'next/link'
-class HelloUA extends React.Component {
+class Dashboard extends React.Component {
   static async getInitialProps({req, res,  ctx }) {
    try {
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
@@ -18,12 +18,12 @@ class HelloUA extends React.Component {
   }
 
   render() {
-    console.log('page a token ', this.props.token)
-    // Cookie.set('cook', 'value')
-    return <div>Hello World {this.props.userAgent}  <Link href='/b' as='/b'>
-    <a>b</a>
+    return <div>
+      <h4>Dashboard</h4>
+   <Link href='/profile'>
+    <a>go to profile</a>
   </Link></div>;
   }
 }
 
-export default HelloUA;
+export default Dashboard;
