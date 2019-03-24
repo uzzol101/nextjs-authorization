@@ -11,8 +11,8 @@ class MyApp extends App {
         }
         
         // list unauthorized page here
-        const unAuthorizedPage = ['/register', '/']
-        let noAuthorizationNeeded = unAuthorizedPage.includes(ctx.pathname)
+        const unAuthorizedPages = ['/register', '/']
+        let noAuthorizationNeeded = unAuthorizedPages.includes(ctx.pathname)
 
         // for pages that don't need authorization
         if (noAuthorizationNeeded) {

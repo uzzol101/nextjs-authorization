@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 
 export default class login extends Component {
   handleLogin = () => {
-    Cookie.set('token', 'very_long_token')
+    Cookie.set('token', 'secret_token')
     Router.push('/dashboard')
 
   }
