@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
     return <div>
       <h4>Dashboard</h4>
    <Link href='/profile'>
-    <a>go to profile</a>
+    <a>go to profile (need authorization)</a>
   </Link></div>;
   }
 }

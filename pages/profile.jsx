@@ -19,7 +19,7 @@ export default class b extends Component {
       <div>
         <h4>Profile</h4>
         <Link href='/dashboard'>
-        <a>go to dashboard</a>
+        <a>go to dashboard (need authorization)</a>
       </Link>
       <br/>
       <br/>
