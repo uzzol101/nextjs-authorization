@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import {token} from '../api'
 import {login} from '../helper/auth'
+import Wrapper from '../components/Wrapper'
 const app =  (props) => (
  <React.Fragment>
     <i>No authorization need for this page</i>
@@ -31,7 +32,8 @@ const app =  (props) => (
       </Link>
     </li>
   </ul>
-  
+  <h4>Test section</h4>
+  <Wrapper />
  </React.Fragment>
 )
 
