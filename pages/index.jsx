@@ -33,7 +33,7 @@ const app =  (props) => (
     </li>
   </ul>
   <h4>Test section</h4>
-  <Wrapper />
+  <Wrapper row={3} column={1} />
  </React.Fragment>
 )
 

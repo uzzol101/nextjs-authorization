@@ -20,19 +20,19 @@ class MyApp extends App {
         }
 
         // pages that requires authorization
-        if (typeof token == 'undefined' || token == 'null'){
-            // server side
-            if (ctx.res && ctx.pathname !=='/login') {
-                ctx.res.writeHead(302, {Location: '/login'})
-                ctx.res.end()
-                return {pageProps}
-            } else {
-                // browser side 
-               if (ctx.pathname !== '/login') {
-                Router.push('/login')
-               }
-            }
-        }
+        // if (typeof token == 'undefined' || token == 'null'){
+        //     // server side
+        //     if (ctx.res && ctx.pathname !=='/login') {
+        //         ctx.res.writeHead(302, {Location: '/login'})
+        //         ctx.res.end()
+        //         return {pageProps}
+        //     } else {
+        //         // browser side 
+        //        if (ctx.pathname !== '/login') {
+        //         Router.push('/login')
+        //        }
+        //     }
+        // }
         return { pageProps};
     }
 
