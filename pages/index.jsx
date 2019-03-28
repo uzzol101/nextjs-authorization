@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import {token} from '../api'
 import {login} from '../helper/auth'
+import Card from '../components/Card'
+
 import Wrapper from '../components/Wrapper'
 const app =  (props) => (
  <React.Fragment>
@@ -33,7 +35,7 @@ const app =  (props) => (
     </li>
   </ul>
   <h4>Test section</h4>
-  <Wrapper row={3} column={1} />
+  <Wrapper row={1} column={[2,2,6,2]} render={() => <Card />} />
  </React.Fragment>
 )
 

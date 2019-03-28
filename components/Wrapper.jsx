@@ -1,38 +1,69 @@
 import React from 'react'
-import Card from './Card'
 
 //Use it like this  <Wrapper row={1} column={4} />
 export default function Wrapper(props) {
     let row = props.row ||  1;
-    let col = props.column || 1;
+    let col = props.column || 1
   return (
     <div>
         {/* pass the component to be used in each column */}
-        {createRows(row, col, <Card  />)}
+        {createRows(row, col, props)}
     </div>
   )
 }
 
-function createRows (numberOfRows, numberOfCols, component) {
+function createRows (numberOfRows, numberOfCols, props) {
     let rows = []
     for (let row = 1; row <= numberOfRows; row++) {
-        let readyCols = createColumns(numberOfCols, component)
+        let readyCols = createColumns(numberOfCols, props)
         let completeRow = <div key={row} className="row">{readyCols}</div>
         rows.push(completeRow)
     }
     return rows;
 }
 
-function createColumns (numberOfCols, component) {
-    let cols = []
+function createColumns (columns, props) {
+    let cols = [], numberOfCols, colIsCompatible, classList = "";
+    let isMultiDevice = false;
+    numberOfCols = columns
+    // for multi device
+    if (Array.isArray(columns)) {
+        isMultiDevice = true
+        //props column [desktop,tablet,mobile];
+        numberOfCols = columns[0];
+    }
     let colWidth = 12 / numberOfCols
     // colWidth should fit in 12 column grids
-    let colIsCompatible = isInt(colWidth)
+    colIsCompatible = isInt(colWidth)
     if (!colIsCompatible) {
         throw new Error("Col number is not compatible with 12 col grids");
     }
+    if (isMultiDevice) {
+        columns.forEach((col, index) => {
+             // large screen
+             if (index == 0) {
+                classList += 'col-lg-' + col + ' '
+            }
+            // for desktop
+            if (index == 1) {
+                classList += 'col-md-' + col + ' '
+            }
+            // for tablet
+            if (index == 2) {
+                classList += 'col-sm-' + col + ' '
+            }
+            // for mobile
+            if (index == 3) {
+                classList += 'col-' + col
+            }
+        })
+    } else {
+        // defualt is desktop
+        classList = "col-md-" + colWidth
+    }
+    
     for (let col = 1; col <= numberOfCols; col++) {
-        let struct = <div key={col} className={"col-sm-" + colWidth}>{component}</div>
+        let struct = <div key={col} className={classList}>{props.render()}</div>
         cols.push(struct)
     }
     
