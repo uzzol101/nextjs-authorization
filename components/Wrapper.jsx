@@ -26,30 +26,21 @@ function createColumns (props) {
     let cols = [], numberOfCols, colIsCompatible, classList = "";
     let isMultiDevice = false;
     numberOfCols = props.column
-    // for multi device
-    if (Array.isArray(props.column)) {
-        isMultiDevice = true
-        //props column [desktop,tablet,mobile];
-        numberOfCols = props.column[0];
-    }
-    let colWidth = 12 / numberOfCols
+    let colWidth = (12 / props.column)
     // colWidth should fit in 12 column grids
     colIsCompatible = isInt(colWidth)
     if (!colIsCompatible) {
-        throw new Error("Col number is not compatible with 12 col grids");
+        throw new Error("Col number is either incompatible with 12 col grids or you forgot to pass column props");
     }
-    if (isMultiDevice) {
-        let colSizes = ['col-lg-','col-md-','col-sm-','col-']
-        props.column.forEach((col, index) => {
-            classList += `${colSizes[index]}${col} `
+    if (props.classList && props.classList.length) {
+        let colSizes = ['col-','col-sm-','col-lg-']
+        props.classList.forEach((col, index) => {
+            classList += ` ${colSizes[index]}${col}`
         })
-    } else {
-        // defualt is desktop
-        classList = "col-md-" + colWidth
     }
     
     for (let col = 1; col <= numberOfCols; col++) {
-        let struct = <div key={col} className={classList}>{props.render()}</div>
+        let struct = <div key={col} className={"col-md-" + colWidth + classList}>{props.render()}</div>
         cols.push(struct)
     }
     

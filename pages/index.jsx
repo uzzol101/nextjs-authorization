@@ -35,7 +35,7 @@ const app =  (props) => (
     </li>
   </ul>
   <h4>Test section</h4>
-  <Wrapper row={1} column={[6,6,6,2]} render={() => <Card />} />
+  <Wrapper row={1} column={3} classList={[3,2]} render={() => <Card />} />
  </React.Fragment>
 )
 
