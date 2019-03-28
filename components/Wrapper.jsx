@@ -7,30 +7,30 @@ export default function Wrapper(props) {
   return (
     <div>
         {/* pass the component to be used in each column */}
-        {createRows(row, col, props)}
+        {createRows(props)}
     </div>
   )
 }
 
-function createRows (numberOfRows, numberOfCols, props) {
+function createRows (props) {
     let rows = []
-    for (let row = 1; row <= numberOfRows; row++) {
-        let readyCols = createColumns(numberOfCols, props)
+    for (let row = 1; row <= props.row; row++) {
+        let readyCols = createColumns(props)
         let completeRow = <div key={row} className="row">{readyCols}</div>
         rows.push(completeRow)
     }
     return rows;
 }
 
-function createColumns (columns, props) {
+function createColumns (props) {
     let cols = [], numberOfCols, colIsCompatible, classList = "";
     let isMultiDevice = false;
-    numberOfCols = columns
+    numberOfCols = props.column
     // for multi device
-    if (Array.isArray(columns)) {
+    if (Array.isArray(props.column)) {
         isMultiDevice = true
         //props column [desktop,tablet,mobile];
-        numberOfCols = columns[0];
+        numberOfCols = props.column[0];
     }
     let colWidth = 12 / numberOfCols
     // colWidth should fit in 12 column grids
@@ -40,7 +40,7 @@ function createColumns (columns, props) {
     }
     if (isMultiDevice) {
         let colSizes = ['col-lg-','col-md-','col-sm-','col-']
-        columns.forEach((col, index) => {
+        props.column.forEach((col, index) => {
             classList += `${colSizes[index]}${col} `
         })
     } else {
