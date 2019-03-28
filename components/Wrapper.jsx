@@ -39,23 +39,9 @@ function createColumns (columns, props) {
         throw new Error("Col number is not compatible with 12 col grids");
     }
     if (isMultiDevice) {
+        let colSizes = ['col-lg-','col-md-','col-sm-','col-']
         columns.forEach((col, index) => {
-             // large screen
-             if (index == 0) {
-                classList += 'col-lg-' + col + ' '
-            }
-            // for desktop
-            if (index == 1) {
-                classList += 'col-md-' + col + ' '
-            }
-            // for tablet
-            if (index == 2) {
-                classList += 'col-sm-' + col + ' '
-            }
-            // for mobile
-            if (index == 3) {
-                classList += 'col-' + col
-            }
+            classList += `${colSizes[index]}${col} `
         })
     } else {
         // defualt is desktop
