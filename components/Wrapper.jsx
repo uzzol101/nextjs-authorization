@@ -1,46 +1,80 @@
 import React from 'react'
-import Card from './Card'
+/* 
+    props type
+        row: number 
+        column: number 
+        classList: [numbers] // [2, 3, 4] will render as [col-2, col-sm-3, col-lg-4]
+        component: function // () => <Card />
+*/
 
-//Use it like this  <Wrapper row={1} column={4} />
-export default function Wrapper(props) {
-    let row = props.row ||  1;
-    let col = props.column || 1;
+export default function RenderView(props) {
+    let data = chunk(props.data, props.column)
   return (
     <div>
-        {/* pass the component to be used in each column */}
-        {createRows(row, col, <Card  />)}
+        {createRowsWithColumns(props, data)}
     </div>
   )
 }
 
-function createRows (numberOfRows, numberOfCols, component) {
+
+function createRowsWithColumns (props, data) {
+    if (!props.row || ! props.column || typeof props.component !== 'function') {
+        throw new Error("Make sure you have provided row, column and component props")
+    }
     let rows = []
-    for (let row = 1; row <= numberOfRows; row++) {
-        let readyCols = createColumns(numberOfCols, component)
+    for (let row = 0; row < props.row; row++) {
+        let readyCols = createColumns(props, data[row])
         let completeRow = <div key={row} className="row">{readyCols}</div>
         rows.push(completeRow)
     }
     return rows;
 }
 
-function createColumns (numberOfCols, component) {
-    let cols = []
-    let colWidth = 12 / numberOfCols
-    // colWidth should fit in 12 column grids
-    let colIsCompatible = isInt(colWidth)
-    if (!colIsCompatible) {
-        throw new Error("Col number is not compatible with 12 col grids");
+function createColumns (props, data) {
+    let cols = [], numberOfCols, colIsCompatible, classList = "";
+    numberOfCols = props.column
+    let colWidth = columnWidth(props.column)
+    if (props.column > 12) {
+        throw new Error('column should not exceed 12')
     }
-    for (let col = 1; col <= numberOfCols; col++) {
-        let struct = <div key={col} className={"col-sm-" + colWidth}>{component}</div>
+    if (props.classList && props.classList.length) {
+        let colSizes = ['col-','col-sm-','col-lg-']
+        props.classList.forEach((col, index) => {
+            classList += ` ${colSizes[index]}${col}`
+        })
+    }
+    for (let col = 0; col < numberOfCols; col++) {
+        let struct = <div key={col} className={"col-md-" + colWidth + classList}>{props.component({data: propsData(data, col)})}</div>
         cols.push(struct)
     }
-    
     return cols;
 }
 
-function isInt(n){
-    return( Number(n) === n) && (n % 1 === 0);
+
+function propsData (data, index) {
+    if (Array.isArray(data)) {
+        return data[index]
+    } else {
+        return data
+    }
 }
 
+function columnWidth (col) {
+    if (12 % col == 0) {
+        return 12 / col
+    } else {
+        return 1
+    }
+}
 
+function chunk (data, chunkSize) {
+    let original = [...data]
+    let chunkResult = []
+    let iterationNumber = Math.floor(data.length / chunkSize)
+    for (let i = 0; i < iterationNumber; i++) {
+        let chunked = original.splice(0, chunkSize)
+        chunkResult.push(chunked)
+    }
+    chunkResult.push(original)
+    return chunkResult
+}
